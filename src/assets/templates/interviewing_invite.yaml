@@ -1,0 +1,83 @@
+name: "Interview booking time"
+version: 1.0
+description: "Send an email to ask candidate to book a time on the company's system"
+
+template: |
+  Subject: Interview Invitation - {{ position_title }} at {{ company_name }}
+
+  Hi {{ candidate_first_name }},
+
+  Thank you for applying for the {{ position_title }} position at {{ company_name }}. 
+  We were impressed with your background and would like to invite you to an interview.
+
+  Please book a suitable time for your interview using our scheduling portal:
+  {{ booking_link }}
+
+  Your interview will be conducted {{ interview_type }} and is expected to last approximately {{ duration }} minutes.
+
+  {{ assignment }}
+
+  If you have any questions, feel free to contact me at {{ contact_email }}.
+
+  Looking forward to speaking with you!
+
+  Best regards,  
+  {{ recruiter_name }}  
+  {{ recruiter_title }}  
+  {{ company_name }}  
+  {{ company_website }}
+
+
+string_parameters:
+  position_title: 
+    default: 'xxx'
+
+  company_name: 
+    default: 'Megacorp.'
+
+  company_website: 
+    default: 'https://megacorp.com'
+
+  candidate_first_name:
+    default: 
+
+  booking_link:
+    default: 'https://booking-url.com'
+
+  assignment_link:
+    default: 'https://assignment-url.com'
+
+  contact_email:
+    default:
+
+  recruiter_name:
+    default:
+
+  recruiter_title:
+    default:
+  
+
+option_parameters:
+  interview_type:
+    options:
+      - "on-site"
+      - "online"
+      - "phone call"
+
+  duration:
+    options:
+      - "30"
+      - "45"
+      - "60"
+      - "90"
+
+  assignment:
+    options:
+      - "You will also find a short pre-interview assignment here: {{ assignment_link }}\nPlease complete it by {{ assignment_deadline }}."
+    if_not_selected_remove_trailing:
+      - "\n\n"
+
+date_parameters:
+  assignment_deadline:
+    delay: 7
+    format: "within <delay> days latest by <ddo> of <MM>"

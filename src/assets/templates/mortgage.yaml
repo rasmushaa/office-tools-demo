@@ -1,0 +1,88 @@
+name: "Mortgage negotiation invitation"
+version: 1.0
+description: "Invite a customer to book or confirm a meeting for mortgage negotiations."
+
+template: |
+  Subject: Mortgage Negotiation Invitation - {{ bank_name }}
+
+  Dear {{ customer_first_name }},
+
+  Thank you for your continued trust in {{ bank_name }}. We would like to invite you to discuss your mortgage {{ mortgage_purpose }} and explore the best options for your financial goals.
+
+  Please book or confirm a suitable time for your meeting using our customer portal:
+  {{ booking_link }}
+
+  The meeting will take place {{ meeting_type }} and is expected to last approximately {{ duration }} minutes.
+
+  {{ required_documents_note }}
+  
+  {{ preparation_note }}
+
+  If you have any questions before the meeting, please contact me at {{ contact_email }}.
+
+  Looking forward to assisting you,
+
+  Best regards,  
+  {{ advisor_name }}  
+  {{ advisor_title }}  
+  {{ bank_name }}  
+  {{ bank_website }}
+
+
+string_parameters:
+  bank_name:
+    default: "Nordic Finance Bank"
+  bank_website:
+    default: "https://nordicfinancebank.com"
+  customer_first_name:
+    default: "x"
+  booking_link:
+    default: "https://nfb.com/meeting-booking"
+  contact_email:
+    default: "advisor@nfb.com"
+  advisor_name:
+    default: ""
+  advisor_title:
+    default: "Senior Mortgage Advisor"
+
+option_parameters:
+  meeting_type:
+    options:
+      - "at our branch"
+      - "via online meeting"
+      - "over a phone call"
+
+  duration:
+    options:
+      - "30"
+      - "45"
+      - "60"
+
+  mortgage_purpose:
+    options:
+      - "application"
+      - "refinancing"
+      - "renewal"
+      - "review"
+
+  required_documents_note:
+    options:
+      - "- Latest 3 payslips, starting from {{ payslips_date }}"
+      - "- Property valuation report"
+      - "- ID verification"
+    leading_line: "Please remember to upload or bring the following documents before the meeting:\n"
+    if_not_selected_remove_trailing:
+      - "\n\n"
+    if_multiple_selected_add_between:
+      - "\n"
+
+  preparation_note:
+    options:
+      - "You can also fill out your pre-meeting financial form through our portal to speed up the process."
+    if_not_selected_remove_trailing:
+      - "\n\n"
+
+date_parameters:
+  payslips_date:
+    delay: -90
+    format: "<MM> of <yyyy>"

@@ -1,0 +1,56 @@
+name: "Customer Reclamation"
+version: 1.1
+description: "Send a follow-up email after a phone conversation to maintain engagement and remind the customer of next steps."
+
+template: |
+  Dear {{ customer_name }},
+
+  Thank you for taking the time to speak with us on {{ contact_date }}.  
+  As we discussed, we will reach out to you again by {{ next_date }} with an update or further details.
+
+  In the meantime, please don’t hesitate to contact us at {{ help_contact }} if you have any additional questions or need assistance.
+
+  {{ reminder }}
+
+  {{ marketing_permission }}
+
+  Kind regards,  
+  {{ my_name }}  
+  Customer Care Team
+
+string_parameters:
+  my_name: 
+    default: "John Smith"
+  customer_name: 
+    default: ""
+
+option_parameters:
+  help_contact:
+    options:
+      - "support@company.com"
+      - "helpdesk@company.com"
+      - "service@company.com"
+
+  reminder:
+    options:
+      - "• Please take a moment to review the documents we sent during our call. This will help us move forward smoothly during our next discussion."
+      - "• Don’t forget to log in to your customer portal to review your current service details or update your information before our next call."
+    if_not_selected_remove_trailing:
+      - "\n\n"
+    if_multiple_selected_add_between:
+      - "\n"
+
+  marketing_permission:
+    options:
+      - "If you’d like to stay updated about our latest offers and customer programs, you can subscribe to our newsletter through your online account."
+    if_not_selected_remove_trailing:
+      - "\n\n"
+
+date_parameters:
+  contact_date:
+    delay: 0
+    format: "<dd> <MM>"
+
+  next_date:
+    delay: 3
+    format: "<ddo> of <MM>"
