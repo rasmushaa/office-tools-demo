@@ -3,8 +3,6 @@ version: 1.1
 description: "Send an email to ask candidate to book a time on the company's system"
 
 template: |
-  Subject: Interview Invitation - {{ position_title }} at {{ company_name }}
-
   Hi {{ candidate_first_name }},
 
   Thank you for applying for the {{ position_title }} position at {{ company_name }}. 

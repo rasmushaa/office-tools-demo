@@ -2,4 +2,6 @@ from .filesystem import FileSystem
 from .template import Template
 
 filesystem = FileSystem()
-template = Template()
+
+def init_template():
+    return Template()

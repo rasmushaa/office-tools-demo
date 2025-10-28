@@ -42,6 +42,9 @@ class StringParameter(BaseParameter):
             value=self.__default
         )
 
+    def update_default(self):
+        self.__default = self.__value
+
     @property
     def value(self):
         return self.__value
@@ -58,14 +61,19 @@ class OptionParameter(BaseParameter):
         self.__if_not_selected_remove_trailing = settings.get('if_not_selected_remove_trailing', [])
         self.__if_multiple_selected_add_between = settings.get('if_multiple_selected_add_between', [])
         self.__selection_mode = 'multi' if self.__if_multiple_selected_add_between else 'single'
-        self.__value = None
+        self.__default = None
+        self.__value = self.__default
 
     def render(self):
         self.__value = st.pills(
             f'Select option for "{self.key}":',
             options=self.__options,
-            selection_mode=self.__selection_mode
+            selection_mode=self.__selection_mode,
+            default=self.__default
         )
+
+    def update_default(self):
+        self.__default = self.__value
 
     @property
     def value(self):
@@ -106,14 +114,18 @@ class DateParameter(BaseParameter):
         super().__init__(key)
         self.__format = settings.get('format', 'YYYY-MM-DD')
         self.__delay = settings.get('delay', 0)
-        self.__value = pd.Timestamp('today') + pd.Timedelta(days=self.__delay)
+        self.__default = pd.Timestamp('today') + pd.Timedelta(days=self.__delay)
+        self.__value = self.__default 
 
     def render(self):
         self.__value = st.date_input(
             f'Select date for "{self.key}":',
-            value=self.__value,
+            value=self.__default,
             format='YYYY-MM-DD'
         )
+
+    def update_default(self):
+        self.__default = self.__value
 
     @property
     def value(self):

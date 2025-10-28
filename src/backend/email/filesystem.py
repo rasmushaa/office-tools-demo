@@ -1,13 +1,14 @@
 import yaml
 from pathlib import Path
 from typing import Dict, Any
+from .template import Template
 
 
 TEMPLATE_PATH = Path('src/assets/templates')
 
 
 class ValidityLevel:
-    VALID = "validity"
+    VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
 
@@ -128,24 +129,19 @@ class FileSystem:
         for pattern in ("*.yml", "*.yaml"):
             for f in TEMPLATE_PATH.glob(pattern):
                 check = self.is_valid_template_file(str(f))
-                if check["validity"] != self.validity_levels.INVALID:
-                    data = yaml.safe_load(f.read_text(encoding="utf-8"))
-                    templates[f.stem] = {
-                        "name": data.get("name"),
-                        "version": data.get("version"),
-                        "description": data.get("description"),
-                        "path": str(f),
-                        "validity": check["validity"],
-                        "error": check.get("error")
+                templates[fr'{f}'] = {
+                    "validity": check["validity"],
+                    "error": check.get("error")
                     }
-                else:
-                    templates[f.stem] = {
-                        "validity": check["validity"],
-                        "error": check.get("error")
-                    }
-
-        templates_sort = dict(sorted(templates.items(), 
-                       key=lambda x: (x[1].get('name', ''), 
-                            x[1].get('version', ''))))
-
-        return templates_sort
+        return templates
+    
+    def get_template_objects(self):
+        templates = self.scan_templates()
+        for key, template in templates.items():
+            if template['validity'] == self.validity_levels.INVALID:
+                templates[key]['object'] = None
+                continue
+            object = Template()
+            object.load_file(key) 
+            templates[key]['object'] = object
+        return templates

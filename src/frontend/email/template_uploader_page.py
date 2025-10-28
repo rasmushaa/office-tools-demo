@@ -67,7 +67,10 @@ with st.form("Template file form", clear_on_submit=True):
                 timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
                 dest = TEMPLATES_DIR / f"{stem}-{timestamp}{suffix}"
 
-            dest.write_bytes(content_bytes)
+            #dest.write_bytes(content_bytes)
+            object = st.session_state.backend.email.init_template()
+            object.load_yaml_bytes(content_text) 
+            st.session_state['email']['templates'][fr'{safe_name }'] = {'object': object, 'validity': check['validity']}
 
             # Log success messags after all steps
             if check['validity'] == levels.WARNING:

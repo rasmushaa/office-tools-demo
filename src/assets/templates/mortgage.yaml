@@ -3,8 +3,6 @@ version: 1.0
 description: "Invite a customer to book or confirm a meeting for mortgage negotiations."
 
 template: |
-  Subject: Mortgage Negotiation Invitation - {{ bank_name }}
-
   Dear {{ customer_first_name }},
 
   Thank you for your continued trust in {{ bank_name }}. We would like to invite you to discuss your mortgage {{ mortgage_purpose }} and explore the best options for your financial goals.
