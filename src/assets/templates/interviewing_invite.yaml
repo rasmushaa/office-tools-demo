@@ -1,5 +1,5 @@
 name: "Interview booking time"
-version: 1.0
+version: 1.1
 description: "Send an email to ask candidate to book a time on the company's system"
 
 template: |
@@ -79,3 +79,9 @@ date_parameters:
   assignment_deadline:
     delay: 7
     format: "within <delay> days latest by <ddo> of <MM>"
+
+# unsupoprted paremeter field
+my_new_parameter:
+  values:
+   - 1
+   - 2

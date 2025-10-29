@@ -1,0 +1,90 @@
+name: "This is your template name visible on the sidebar"
+version: 1.0
+description: "And here you can include some details about the template"
+
+template: |
+  Here you can code your dynamic template using jinja notation.
+
+  # Strings
+  (1) This is how you use strings withe default values: {{ string1 }}
+  (2) String must have the default key, even if you are not going to use it: {{ string2 }}...
+
+  # Options
+  (1) For option parameters, you first specify the name, and then add the options as a list {{ option1 }}.
+  (2) To make it multiselection: 
+  ==> Add if_multiple_selected_add_between key to speciy the pattern 
+  ==> {{ option2 }}.
+  (3) To make the option optional: 
+  ==> Specify if_not_selected_remove_trailing 
+  ==> It {{ option3 }} handles extra spaces and new lines to maintain the format
+  {{ option4 }}
+
+  # Dates
+  (1) All date parameter always defaults to the current date.
+  (2) To adjus the date:
+  ==> Specify a <delay> key 
+  ==> Which adjusts the current date by {{ date1 }}.
+  (3) You can use keys: 
+  ==> <dd>, <ddo>, <DD>, <mm>, <mmo>, <MM>, <yy>, and <yyyy> to obtain formats:
+  ==> {{ date2 }} 
+
+  {{ option5 }}
+
+
+string_parameters:
+  string1:
+    default: "StringPrameter1 default value"
+  string2:
+    default: ""
+
+option_parameters:
+  option1:
+    options:
+      - "A"
+      - "B"
+      - "C"
+
+  option2:
+    options:
+      - "A"
+      - "B"
+      - "C"
+    if_multiple_selected_add_between:
+      - ", "
+
+  option3:
+    options:
+      - "<Now you see me, and now you...>"
+    if_not_selected_remove_trailing:
+      - " "
+
+  option4:
+    options:
+      - "==> And inlcude many newline strings"
+      - "==> Which can be optional, or you don't have to select anything!"
+    if_multiple_selected_add_between:
+      - "\n"
+    if_not_selected_remove_trailing:
+      - "\n"
+    leading_line: "(4) Additionally you can also use leading_line to add some common topic for every option\n"
+
+  option5:
+    options:
+      - "==> Like this: {{ string1 }}"
+      - "==> And dates are also suppoerted: {{ date1 }}"
+      - "==> This is possible because options are rendered before other parameters"
+    if_multiple_selected_add_between:
+      - "\n"
+    if_not_selected_remove_trailing:
+      - "\n"
+    leading_line: "#Bonus\n(1) It is also possible to neste other parameters to options!\n"
+
+
+date_parameters:
+  date1:
+    delay: -1
+    format: "<delay> days to have <ddo> of <MM>"
+
+  date2:
+    delay: 0
+    format: "<dd>, <ddo>, <DD>, <mm>, <mmo>, <MM>, <yy>, and <yyyy>"
